@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from "react";
+import "./App.css";
+import { generateMnemonic } from "bip39";
+import ConfirmPhrase from "./seedConfirm";
+window.Buffer = window.Buffer || require("buffer").Buffer; // For Buffer
+const seed = generateMnemonic();
 function App() {
+  const [seedPhrase, setSeedPhrase] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Mnemonic Seed</h1>
+      <p>The Random Generated Seed: {seed}</p>
+      <label>Enter the Seed :</label>
+      <input
+        type="text"
+        onChange={(e) => {
+          setSeedPhrase(e.target.value);
+        }}
+        value={seedPhrase}
+      />
+      <ConfirmPhrase seed={seed} seedPhrase={seedPhrase} />
     </div>
   );
 }
